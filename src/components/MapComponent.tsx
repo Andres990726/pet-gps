@@ -23,29 +23,27 @@ export default function MapComponent() {
 
   if (isLoading) return <p>Loading...</p>;
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <MapContainer
-        center={[position.lat, position.lng]}
-        zoom={14}
-        scrollWheelZoom={false}
-        style={{ height: "100vh", width: "100vw" }}
+    <MapContainer
+      center={[position.lat, position.lng]}
+      zoom={14}
+      scrollWheelZoom={false}
+      style={{ height: "100%", width: "100vw" }}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Marker
+        position={[
+          parseFloat(data?.feeds[data.feeds.length - 1].field1 ?? "0"),
+          parseFloat(data?.feeds[data.feeds.length - 1].field2 ?? "0"),
+        ]}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker
-          position={[
-            parseFloat(data.feeds[data.feeds.length - 1].field1),
-            parseFloat(data.feeds[data.feeds.length - 1].field2),
-          ]}
-        >
-          <Popup>Mascota.</Popup>
-        </Marker>
-        <Marker position={[position.lat, position.lng]}>
-          <Popup>Tu posición.</Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+        <Popup>Mascota.</Popup>
+      </Marker>
+      <Marker position={[position.lat, position.lng]}>
+        <Popup>Tu posición.</Popup>
+      </Marker>
+    </MapContainer>
   );
 }
