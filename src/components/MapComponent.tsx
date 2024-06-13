@@ -2,6 +2,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import usePosition from "../hooks/usePosition";
+import IconLocation from "./IconLocation";
 export default function MapComponent() {
   const { data, isLoading } = usePosition();
 
@@ -10,14 +11,12 @@ export default function MapComponent() {
     lng: -76.5930209,
   });
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setPosition({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-    );
+    navigator.geolocation.getCurrentPosition((position) => {
+      setPosition({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
   }, []);
   console.log(position);
 
@@ -34,6 +33,7 @@ export default function MapComponent() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker
+        icon={IconLocation}
         position={[
           parseFloat(data?.feeds[data.feeds.length - 1].field1 ?? "0"),
           parseFloat(data?.feeds[data.feeds.length - 1].field2 ?? "0"),
@@ -41,7 +41,7 @@ export default function MapComponent() {
       >
         <Popup>Mascota.</Popup>
       </Marker>
-      <Marker position={[position.lat, position.lng]}>
+      <Marker icon={IconLocation} position={[position.lat, position.lng]}>
         <Popup>Tu posición.</Popup>
       </Marker>
     </MapContainer>

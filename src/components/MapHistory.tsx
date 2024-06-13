@@ -1,6 +1,7 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import usePosition from "../hooks/usePosition";
+import IconLocation from "./IconLocation";
 export default function MapHistory() {
   const { data, isLoading } = usePosition();
 
@@ -20,7 +21,10 @@ export default function MapHistory() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {data?.feeds.map((feed) => (
-        <Marker position={[parseFloat(feed.field1), parseFloat(feed.field2)]}>
+        <Marker
+          icon={IconLocation}
+          position={[parseFloat(feed.field1), parseFloat(feed.field2)]}
+        >
           <Popup>{feed.created_at}</Popup>
         </Marker>
       ))}
